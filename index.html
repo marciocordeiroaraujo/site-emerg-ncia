@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enviar Socorro</title>
+    <script>
+        function sendHelp() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const phoneNumber = '5588999845428'; // Substitua pelo número de telefone do contato de emergência
+                    const message = `Socorro! Minha localização é: https://maps.google.com/?q=${latitude},${longitude}`;
+                    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+                    window.location.href = whatsappUrl;
+                }, function(error) {
+                    alert('Não foi possível obter a localização: ' + error.message);
+                });
+            } else {
+                alert("Geolocalização não é suportada pelo seu navegador.");
+            }
+        }
+    </script>
+</head>
+<body onload="sendHelp()">
+    <p>Obtendo sua localização e abrindo o WhatsApp...</p>
+</body>
+</html>
