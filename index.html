@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Enviar Socorro</title>
-    <script>
-        function sendHelp() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    const phoneNumber = localStorage.getItem('emergencyPhoneNumber');
-                    const message = `Socorro! Minha localização é: https://maps.google.com/?q=${latitude},${longitude}`;
-                    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-                    window.location.href = whatsappUrl;
-                }, function(error) {
-                    alert('Não foi possível obter a localização: ' + error.message);
-                });
-            } else {
-                alert("Geolocalização não é suportada pelo seu navegador.");
-            }
-        }
+  <title>Enviar Socorro</title>
+  <script>
+    function sendHelp() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          const phoneNumber = localStorage.getItem('emergencyPhoneNumber');
+          const message = `Socorro! Minha localização é: https://maps.google.com/?q=${latitude},${longitude}`;
+          const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+          window.location.href = whatsappUrl;
+        }, function(error) {
+          alert('Não foi possível obter a localização: ' + error.message);
+        });
+      } else {
+        alert("Geolocalização não é suportada pelo seu navegador.");
+      }
+    }
 
-        function registerPhoneNumber() {
-            const phoneNumber = prompt("Por favor, insira o número de telefone para emergências (com código do país):");
-            if (phoneNumber) {
-                localStorage.setItem('emergencyPhoneNumber', phoneNumber);
-                alert('Número de telefone salvo com sucesso!');
-                sendHelp();
-            } else {
-                alert('Número de telefone não fornecido. Não é possível enviar mensagem de socorro.');
-            }
-        }
+    function registerPhoneNumber() {
+      const phoneNumber = prompt("Número de emergência (com código do país e DDD):");
+      if (phoneNumber) { // Verifica se o usuário inseriu algo
+        localStorage.setItem('emergencyPhoneNumber', phoneNumber);
+        alert('Número salvo! Enviando mensagem...');
+        sendHelp();
+      } else {
+        alert('Número de telefone não fornecido. Não é possível enviar mensagem de socorro.');
+      }
+    }
 
-        window.onload = function() {
-            const phoneNumber = localStorage.getItem('emergencyPhoneNumber');
-            if (phoneNumber) {
-                sendHelp();
-            } else {
-                registerPhoneNumber();
-            }
-        }
-    </script>
+    window.onload = function() {
+      const phoneNumber = localStorage.getItem('emergencyPhoneNumber');
+      if (phoneNumber) {
+        sendHelp();
+      } else {
+        registerPhoneNumber(); // Chama a função correta aqui
+      }
+    }
+  </script>
 </head>
 <body>
-    <p>Obtendo sua localização e abrindo o WhatsApp...</p>
+  <p>Obtendo sua localização e abrindo o WhatsApp...</p>
 </body>
 </html>
