@@ -8,8 +8,8 @@
                 navigator.geolocation.getCurrentPosition(function(position) {
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
-                    const phoneNumber = '5588999845428'; // Substitua pelo número de telefone do contato de emergência
-                    const message = `Mensagem de alerta de socorro enviada pelo PocketSafe, ocorreu uma emergência, me ajude. Minha localização aproximada é: https://maps.google.com/?q=${latitude},${longitude}`;
+                    const phoneNumber = localStorage.getItem('emergencyContact') || 'SEU_NUMERO_DE_TELEFONE';
+                    const message = `Socorro! Minha localização é: https://maps.google.com/?q=${latitude},${longitude}`;
                     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
                     window.location.href = whatsappUrl;
                 }, function(error) {
